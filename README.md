@@ -1,11 +1,11 @@
 Repartition Task
-##Clara :
+Clara :
 - readme
 - compose 
 - index 
 - adminer 
 
-##Yasmine :
+Yasmine :
 
 - dockerfile
 - dockerignore
