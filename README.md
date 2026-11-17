@@ -13,6 +13,7 @@ Le projet a été réalisé en collaboration  :
 * **Clara** et **Yasmine** : 
   * `compose` (Configuration Docker Compose)
   * `index` (Page d'accueil / Interface principale)
+  * `style` (Style css de la page index)
   * `adminer` (Gestion de la base de données) 
   * `dockerfile` (Configuration de l'image de l'application)
   * `dockerignore` (Fichiers exclus du conteneur)
