@@ -1,0 +1,73 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #faf3ea;
+  color: #3b2a1f;
+  text-align: center;
+}
+
+h1, h2 {
+  color: #6b4226;
+}
+
+/* Le formulaire, centré */
+#coffee-form {
+  max-width: 700px;
+  margin: 0 auto;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+/* Les chats côte à côte */
+#coffee-table-body {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+#coffee-table-body label {
+  width: 140px;
+  padding: 8px;
+  border: 2px solid #eee;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#coffee-table-body img {
+  width: 100%;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Chat choisi */
+#coffee-table-body label:has(input:checked) {
+  border-color: #d9822b;
+  background: #fbe3c8;
+}
+
+/* Les champs */
+input[type="number"],
+input[type="date"],
+input[type="text"] {
+  width: 250px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+/* Le bouton */
+button {
+  padding: 10px 25px;
+  border: none;
+  border-radius: 20px;
+  background: #6b4226;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #d9822b;
+}

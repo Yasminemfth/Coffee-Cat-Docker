@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
     <title>Coffee Cat </title>
 </head>
 <body>
@@ -82,7 +83,11 @@
         body: JSON.stringify(donnees),
         });
         if (reponse.ok) {
-        message.textContent = "Réservation réussi";
+        const resa = await reponse.json();
+        const date = resa.date.split("-").reverse().join("/");
+        const chats = resa.cat.length > 1 ? "vos chats sont " : "votre chat est ";
+        message.textContent = "Réservation réussie ! Merci " + resa.prenom + " " + resa.nom + " : table " + resa.numtable + " pour " + resa.nbrpers + " personne(s)" + " le " + date + ", " + chats + resa.cat.join(", ") + ".";
+        
         e.target.reset();
         } else {
         const erreur = await reponse.json();
