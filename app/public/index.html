@@ -7,63 +7,24 @@
 </head>
 <body>
     <h1>Bienvenue chez Coffee Cat ♥ </h1>
-    
-    <table>
-        <thead>
-            <h2>Rencontrer nos chats</h2>
-            <p>Choisissez votre chat :</p>
-            <div id="coffee-table-body"></div>
-            </tr>
-        </thead>
-        <tbody id="coffee-table-body">
-            <!-- Coffee data will be populated here -->
-        </tbody>
+
+       
+           
 
         <form id="coffee-form">
             <h2>Faire une réservation</h2>
 
-            <fieldset>
             <legend>Choisissez les caractéristiques de votre petit monstre&nbsp;:</legend>
-
-            <div>
-                <input type="checkbox" id="bobby" name="bobby" checked />
-                <label for="bobby">Bobby</label>
-            </div>
-
-            <div>
-                <input type="checkbox" id="caramel" name="caramel" />
-                <label for="caramel">Caramel</label>
-            </div>
-
-            <div>
-                <input type="checkbox" id="chips" name="chips" />
-                <label for="chips">Chips</label>
-            </div>
-
-            <div>
-                <input type="checkbox" id="jazzon" name="jazzon" />
-                <label for="jazzon">Jazzon</label>  
-            </div>
-
-            <div>
-                <input type="checkbox" id="minou" name="minou" />
-                <label for="minou">Minou</label>
-            </div>
-
-            <div>
-                <input type="checkbox" id="neige" name="neige" />
-                <label for="neige">Neige</label>
-            </div>
-
-            <div>
-                <input type="checkbox" id="reglisse" name="reglisse" />
-                <label for="reglisse">Réglisse</label>
-            </div>
-            </fieldset>
+        
+            <p>Choisissez votre chat :</p>
+            <div id="coffee-table-body"></div>
 
 
             <label for="number">Nombre de personnes:</label>
             <input type="number" id="number" name="number" required><br><br>
+
+            <label for="numtable">Numéro de table:</label>
+            <input type="number" id="numtable" name="numtable" required><br><br>
 
             <label for="date">Date:</label>
             <input type="date" id="date" name="date" required><br><br>
@@ -75,6 +36,7 @@
             <input type="text" id="surname" name="surname" placeholder="Prénom" required><br><br>
 
             <button type="submit">Réserver</button>
+            <p id="message"></p>
         </form>
 
     <script>
@@ -97,38 +59,9 @@
     }
 }
 
-    async function rafraichir() {
-        const etat = document.getElementById("etat");
-        const liste = document.getElementById("liste");
-        try {
-        const sante = await fetch("/api/sante").then((r) => r.json());
-        etat.textContent = "Base : " + sante.base;
-        etat.className = "etat " + (sante.base === "connectée" ? "ok" : "ko");
-        document.getElementById("conteneur").textContent = sante.conteneur;
+    async function rafraichir() {}
 
-        const reponse = await fetch("/api/reservations");
-        if (!reponse.ok) {
-            liste.innerHTML = '<tr><td colspan="6">Pas de base de données : rien à afficher pour l\'instant.</td></tr>';
-            return;
-        }
-        const reservations = await reponse.json();
-        liste.innerHTML = "";
-        for (const r of reservations) {
-            const ligne = document.createElement("tr");
-            for (const valeur of [r.cat.join(", "), r.numtable, r.nbrpers, r.date, r.nom, r.prenom]) {
-            const cellule = document.createElement("td");
-            cellule.textContent = valeur;
-            ligne.appendChild(cellule);
-            }
-            liste.appendChild(ligne);
-        }
-        } catch {
-        etat.textContent = "API injoignable";
-        etat.className = "etat ko";
-        }
-    }
-
-    document.getElementById("formulaire").addEventListener("submit", async (e) => {
+    document.getElementById("coffee-form").addEventListener("submit", async (e) => {
         e.preventDefault();
         const message = document.getElementById("message");
         const f = new FormData(e.target);
@@ -136,10 +69,10 @@
         const donnees = {
         cat: f.getAll("cat"),               // tt les chats en liste
         numtable: Number(f.get("numtable")),
-        nbrpers: Number(f.get("nbrpers")),
+        nbrpers: Number(f.get("number")),
         date: f.get("date"),
-        nom: f.get("nom"),
-        prenom: f.get("prenom"),
+        nom: f.get("name"),
+        prenom: f.get("surname"),
         };
 
         if (donnees.cat.length === 0) {
@@ -153,7 +86,7 @@
         body: JSON.stringify(donnees),
         });
         if (reponse.ok) {
-        message.textContent = "";
+        message.textContent = "Résa réussi";
         e.target.reset();
         } else {
         const erreur = await reponse.json();
