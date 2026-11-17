@@ -4,7 +4,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      PGHOST: db
+      PGHOST: db_coffee
       PGUSER: ${USER}
       PGPASSWORD: ${PASSWORD}
       PGDATABASE: ${DB}
