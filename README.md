@@ -1,4 +1,4 @@
-# 🐾 Nom du Projet (Café à Chats)
+# 🐾 Nom du Projet : Café à Chats
 
 Bienvenue sur le dépôt GitHub de notre plateforme de réservation pour notre **café à chats** ! ☕🐱
 
