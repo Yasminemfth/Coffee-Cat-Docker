@@ -1,0 +1,24 @@
+services:
+  api:
+    build: ./app
+    ports:
+      - "3000:3000"
+    environment:
+      PGHOST: db
+      PGUSER: ${USER}
+      PGPASSWORD: ${PASSWORD}
+      PGDATABASE: ${DB}
+    depends_on:
+      - db_coffee
+
+  db_coffee:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_USER: ${USER}
+      POSTGRES_PASSWORD: ${PASSWORD}
+      POSTGRES_DB: ${DB}
+    volumes:
+      - donnee_coffee:/var/lib/postgresql
+
+volumes:
+  donnee_coffee:
