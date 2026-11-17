@@ -21,7 +21,7 @@ Le projet a été réalisé en collaboration avec la répartition des tâches su
 
 ---
 
-## 🚀 Lancer le projet
+##  Lancer le projet
 
 Pour lancer l'application en local à l'aide de Docker, suivez ces étapes :
 
