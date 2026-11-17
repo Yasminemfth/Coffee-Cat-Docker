@@ -37,10 +37,6 @@ const CHATS = [
   { nom: "Réglisse", image: "/images/Réglisse.jpg" },
 ];
 
-// La liste des chats.
-app.get("/api/chats", (req, res) => {
-  res.json(CHATS);
-});
 
 // Évite que l'application plante si la base disparaît en cours de route.
 pool.on("error", (err) => {
@@ -57,7 +53,7 @@ async function connecterLaBase() {
     await pool.query(`
       CREATE TABLE IF NOT EXISTS reservations (
         id        serial PRIMARY KEY,
-        cat       text[] NOT NULL,      # un ou plusieurs chats, ex : Minou,Neige etc
+        cat       text[] NOT NULL,     -- un ou plusieurs chats, ex : Minou,Neige etc
         numtable  int    NOT NULL,
         nbrpers   int    NOT NULL,
         date      date   NOT NULL,
@@ -85,6 +81,12 @@ app.use(express.json());
 
 // La page web et les images des chats (dossier public/).
 app.use(express.static(path.join(__dirname, "public")));
+
+// La liste des chats.
+app.get("/api/chats", (req, res) => {
+  res.json(CHATS);
+});
+
 
 // L'état de l'application. "conteneur" est le nom de la machine :
 // dans Docker, c'est l'identifiant du conteneur.

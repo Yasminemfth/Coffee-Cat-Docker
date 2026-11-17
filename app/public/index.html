@@ -14,9 +14,8 @@
         <form id="coffee-form">
             <h2>Faire une réservation</h2>
 
-            <legend>Choisissez les caractéristiques de votre petit monstre&nbsp;:</legend>
+            <legend>Choisissez votre petit monstre&nbsp;:</legend>
         
-            <p>Choisissez votre chat :</p>
             <div id="coffee-table-body"></div>
 
 
@@ -86,7 +85,7 @@
         body: JSON.stringify(donnees),
         });
         if (reponse.ok) {
-        message.textContent = "Résa réussi";
+        message.textContent = "Réservation réussi";
         e.target.reset();
         } else {
         const erreur = await reponse.json();
