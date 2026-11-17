@@ -27,5 +27,4 @@ Pour lancer l'application en local à l'aide de Docker, suivez ces étapes :
 
 1. Cloner le dépôt sur votre machine :
    ```bash
-   git clone <URL_DU_REPO>
-   cd <NOM_DU_DOSSIER>
+   git clone https://github.com/Yasminemfth/Coffee-Cat-Docker
