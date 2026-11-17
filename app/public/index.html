@@ -35,6 +35,92 @@
 
             <button type="submit">Ajouter</button>
         </form>
-    
+
+    <script>
+    // Affiche les chats à choisir (cocher)
+    async function chargerChats() {
+        const zone = document.getElementById("chats");
+        const chats = await fetch("/api/chats").then((r) => r.json());
+        zone.innerHTML = "";
+        for (const c of chats) {
+        const carte = document.createElement("label");
+        carte.className = "chat";
+        carte.innerHTML = `
+            <img src="${c.image}" alt="${c.nom}">
+            <span><input type="checkbox" name="cat" value="${c.nom}"> ${c.nom}</span>`;
+        zone.appendChild(carte);
+        }
+    }
+
+    async function rafraichir() {
+        const etat = document.getElementById("etat");
+        const liste = document.getElementById("liste");
+        try {
+        const sante = await fetch("/api/sante").then((r) => r.json());
+        etat.textContent = "Base : " + sante.base;
+        etat.className = "etat " + (sante.base === "connectée" ? "ok" : "ko");
+        document.getElementById("conteneur").textContent = sante.conteneur;
+
+        const reponse = await fetch("/api/reservations");
+        if (!reponse.ok) {
+            liste.innerHTML = '<tr><td colspan="6">Pas de base de données : rien à afficher pour l\'instant.</td></tr>';
+            return;
+        }
+        const reservations = await reponse.json();
+        liste.innerHTML = "";
+        for (const r of reservations) {
+            const ligne = document.createElement("tr");
+            for (const valeur of [r.cat.join(", "), r.numtable, r.nbrpers, r.date, r.nom, r.prenom]) {
+            const cellule = document.createElement("td");
+            cellule.textContent = valeur;
+            ligne.appendChild(cellule);
+            }
+            liste.appendChild(ligne);
+        }
+        } catch {
+        etat.textContent = "API injoignable";
+        etat.className = "etat ko";
+        }
+    }
+
+    document.getElementById("formulaire").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const message = document.getElementById("message");
+        const f = new FormData(e.target);
+
+        const donnees = {
+        cat: f.getAll("cat"),               // tt les chats en liste
+        numtable: Number(f.get("numtable")),
+        nbrpers: Number(f.get("nbrpers")),
+        date: f.get("date"),
+        nom: f.get("nom"),
+        prenom: f.get("prenom"),
+        };
+
+        if (donnees.cat.length === 0) {
+        message.textContent = "Choisis au moins un chat.";
+        return;
+        }
+
+        const reponse = await fetch("/api/reservations", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(donnees),
+        });
+        if (reponse.ok) {
+        message.textContent = "";
+        e.target.reset();
+        } else {
+        const erreur = await reponse.json();
+        message.textContent = "Impossible d'enregistrer : " + erreur.erreur;
+        }
+        rafraichir();
+    });
+
+    chargerChats();
+    rafraichir();
+    setInterval(rafraichir, 3000);
+    </script>   
+
 </body>
 </html>
