@@ -8,12 +8,10 @@ Bienvenue sur le dépôt GitHub de notre plateforme de réservation pour notre *
 
 Le projet a été réalisé en collaboration avec la répartition des tâches suivante :
 
-* **Clara** : 
+* **Clara** et **Yasmine** : 
   * `compose` (Configuration Docker Compose)
   * `index` (Page d'accueil / Interface principale)
-  * `adminer` (Gestion de la base de données)
-
-* **Yasmine** : 
+  * `adminer` (Gestion de la base de données) 
   * `dockerfile` (Configuration de l'image de l'application)
   * `dockerignore` (Fichiers exclus du conteneur)
   * `.env` (Variables d'environnement)
@@ -28,3 +26,5 @@ Pour lancer l'application en local à l'aide de Docker, suivez ces étapes :
 1. Cloner le dépôt sur votre machine :
    ```bash
    git clone https://github.com/Yasminemfth/Coffee-Cat-Docker
+ 2. lancer le compose
+ docker compose up --build -d
