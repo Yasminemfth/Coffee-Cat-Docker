@@ -20,5 +20,14 @@ services:
     volumes:
       - donnee_coffee:/var/lib/postgresql
 
+  adminer:
+    image: adminer:5
+    ports:
+      - "8080:8080"
+    environment:
+      ADMINER_DEFAULT_SERVER: db_coffee
+    depends_on:
+      - db_coffee
+
 volumes:
   donnee_coffee:
