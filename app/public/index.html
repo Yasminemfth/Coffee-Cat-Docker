@@ -10,12 +10,9 @@
     
     <table>
         <thead>
-            <h1>Rencontrer nos chats</h1>
-            <tr>
-                <th>Boubouille</th>
-                <th>Numéro</th>
-                <th>Nom</th>
-                <th>Personalité</th>
+            <h2>Rencontrer nos chats</h2>
+            <p>Choisissez votre chat :</p>
+            <div id="coffee-table-body"></div>
             </tr>
         </thead>
         <tbody id="coffee-table-body">
@@ -39,18 +36,22 @@
     <script>
     // Affiche les chats à choisir (cocher)
     async function chargerChats() {
-        const zone = document.getElementById("chats");
+    const zone = document.getElementById("coffee-table-body");
+    try {
         const chats = await fetch("/api/chats").then((r) => r.json());
         zone.innerHTML = "";
         for (const c of chats) {
-        const carte = document.createElement("label");
-        carte.className = "chat";
-        carte.innerHTML = `
-            <img src="${c.image}" alt="${c.nom}">
-            <span><input type="checkbox" name="cat" value="${c.nom}"> ${c.nom}</span>`;
-        zone.appendChild(carte);
+            const carte = document.createElement("label");
+            carte.innerHTML = `
+                <img src="${c.image}" alt="${c.nom}" width="150"><br>
+                <input type="checkbox" name="cat" value="${c.nom}" form="coffee-form">
+                ${c.nom}<br><br>`;
+            zone.appendChild(carte);
         }
+    } catch {
+        zone.textContent = "Impossible de charger les chats.";
     }
+}
 
     async function rafraichir() {
         const etat = document.getElementById("etat");
